@@ -2,8 +2,13 @@ _schema: 1
 
 project_name:
   type: str
-  default: project-template
+  default: project_template
   help: Name of the generated project
+
+project_slug:
+  type: str
+  default: "{{ project_name | lower | replace('-', '_') | replace(' ', '_') }}"
+  when: false
 
 package_or_app:
   type: str

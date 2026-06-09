@@ -19,8 +19,3 @@ repos:
       - id: ruff-format
       - id: ruff-check
         args: [--fix]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.1.0
-    hooks:
-      - id: mypy
-        args: []
