@@ -1,0 +1,27 @@
+_schema: 1
+
+project_name:
+  type: str
+  default: project-template
+  help: Name of the generated project
+
+package_or_app:
+  type: str
+  default: package
+  choices:
+    - package
+    - app
+  help: Generate a Python package or an application (app uses src/ layout)
+
+pre_commit_tool:
+  type: str
+  default: prek
+  choices:
+    - prek
+    - pre_commit
+  help: Pre-commit tool module name
+
+src_layout:
+  type: bool
+  default: "{{ package_or_app == 'package' }}"
+  help: Use src/ layout for Python project structure
