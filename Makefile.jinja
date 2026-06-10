@@ -23,7 +23,7 @@ $(VENV_DIR): pyproject.toml
 	{% if package_or_app == "package" %}$(VENV_PIP) install -e .
 	$(VENV_PIP) freeze --exclude-editable > requirements.txt
 	$(VENV_PIP) install -e .[dev]{% else %}$(VENV_PIP) install .
-	$(VENV_PIP) freeze > requirements.txt
+	$(VENV_PIP) freeze --exclude {{ project_slug }} > requirements.txt
 	$(VENV_PIP) install .[dev]{% endif %}
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} install
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} autoupdate
