@@ -30,3 +30,13 @@ src_layout:
   type: bool
   default: "{{ package_or_app == 'package' }}"
   help: Use src/ layout for Python project structure
+
+_exclude:
+  - .git
+  - ^.gitignore$
+  - ^.pre-commit-config.yaml$
+  - ^src
+  - copier.yml
+  - ^Makefile$
+  - ^pyproject.toml$
+  - requirements.txt

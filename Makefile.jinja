@@ -4,16 +4,17 @@ VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
-.PHONY: help init venv check clean
+.PHONY: help init venv check clean {% if project_slug == "project_template" %} test-template{% endif %}
 
 help:  ## Show this help message.
 	grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 	awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 
-check: venv  ## Run {{ pre_commit_tool }} checks.
+check: $(VENV_DIR)/bin/{{ pre_commit_tool }}  ## Run {{ pre_commit_tool }} checks.
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} run --all-files
 
 venv: $(VENV_DIR)  # Create virtual environment and install dependencies.
+$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
@@ -26,7 +27,7 @@ $(VENV_DIR): pyproject.toml
 
 
 clean:  ## Clean untracked files (except virtual environment and Python files).
-	FILES="$$(git clean -xdn -e $(VENV_DIR)/ -e '*.py')"; \
+	@FILES="$$(git clean -xdn -e $(VENV_DIR)/ -e '*.py')"; \
 	if [ -z "$$FILES" ]; then \
 		echo "Nothing to clean."; \
 	else \
@@ -38,3 +39,13 @@ clean:  ## Clean untracked files (except virtual environment and Python files).
 	fi
 
 init: clean venv check ## Clean untracked files (except virtual environment and Python files).
+
+{% if project_slug == "project_template" %}
+$(VENV_DIR)/bin/copier:
+	rm -rf $(VENV_DIR)
+	python -m venv $(VENV_DIR)
+	$(VENV_PIP) install --upgrade pip setuptools wheel
+	$(VENV_PIP) install copier
+
+test-template: $(VENV_DIR)/bin/copier  ## Test the copier template by applying it to itself
+	$(VENV_PYTHON) -m copier copy --defaults --overwrite . .{% endif %}
