@@ -16,7 +16,7 @@ package_or_app:
   choices:
     - package
     - app
-  help: Generate a Python package or an application (app uses src/ layout)
+  help: Generate a Python package or an application (packages use src/ layout)
 
 pre_commit_tool:
   type: str
@@ -25,11 +25,6 @@ pre_commit_tool:
     - prek
     - pre_commit
   help: Pre-commit tool module name
-
-src_layout:
-  type: bool
-  default: "{{ package_or_app == 'package' }}"
-  help: Use src/ layout for Python project structure
 
 _exclude:
   - .git

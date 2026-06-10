@@ -9,10 +9,8 @@ dev = [
     "copier",
 ]
 
-
 [tool.setuptools]
 package-dir = { "" = "src" }
-
 
 [build-system]
 requires = ["setuptools", "wheel"]

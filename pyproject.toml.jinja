@@ -9,10 +9,8 @@ dev = [
     "copier",{% endif %}
 ]
 
-{% if src_layout %}
-[tool.setuptools]
+{% if package_or_app == 'package' %}[tool.setuptools]
 package-dir = { "" = "src" }
-
 {% endif %}
 [build-system]
 requires = ["setuptools", "wheel"]
