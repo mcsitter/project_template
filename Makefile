@@ -39,7 +39,6 @@ clean:  ## Clean untracked files (except virtual environment and Python files).
 
 init: clean venv check ## Clean untracked files (except virtual environment and Python files).
 
-
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)
 	python -m venv $(VENV_DIR)
