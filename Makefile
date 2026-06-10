@@ -20,8 +20,6 @@ $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
 	python -m venv $(VENV_DIR)
 	$(VENV_PIP) install --upgrade pip setuptools wheel
-	$(VENV_PIP) install -e .
-	$(VENV_PIP) freeze --exclude-editable > requirements.txt
 	$(VENV_PIP) install -e .[dev]
 	$(VENV_PYTHON) -m prek install
 	$(VENV_PYTHON) -m prek autoupdate
