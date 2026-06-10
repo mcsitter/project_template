@@ -18,7 +18,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 88
-select = ["E", "F", "W", "C90"]
+select = ["ALL"]
+ignore = [
+    "COM812",
+    "D203",
+    "D212",
+]
 
 [tool.mypy]
 ignore_missing_imports = true
