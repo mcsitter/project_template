@@ -10,18 +10,19 @@ help:  ## Show this help message.
 	grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 	awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 
-check: $(VENV_DIR)/bin/{{ pre_commit_tool }}  ## Run {{ pre_commit_tool }} checks.
+check: $(VENV_DIR){% if project_slug == "project_template" %}/bin/{{ pre_commit_tool }}{% endif %}  ## Run {{ pre_commit_tool }} checks.
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} run --all-files
 
-venv: $(VENV_DIR)  # Create virtual environment and install dependencies.
-$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv
+venv: $(VENV_DIR)  # Create virtual environment and install dependencies.{% if project_slug == "project_template" %}
+$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv{% endif %}
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
 	python -m venv $(VENV_DIR)
 	$(VENV_PIP) install --upgrade pip setuptools wheel
-	$(VENV_PIP) install -e .[dev]
+	$(VENV_PIP) install -e .
 	$(VENV_PIP) freeze --exclude-editable > requirements.txt
+	$(VENV_PIP) install -e .[dev]
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} install
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} autoupdate
 
