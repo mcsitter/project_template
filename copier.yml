@@ -26,6 +26,11 @@ pre_commit_tool:
     - pre_commit
   help: Pre-commit tool module name
 
+mypy:
+  type: bool
+  default: false
+  help: Add `mypy` dev dependency and pre-commit hook
+
 _exclude:
   - .git
   - ^.gitignore$
