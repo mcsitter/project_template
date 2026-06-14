@@ -23,7 +23,6 @@ venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
 
 $(VENV_DIR)/bin/prek: venv
 
-
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
 	python -m venv $(VENV_DIR)
@@ -45,7 +44,6 @@ clean: ## Remove untracked files (keeps the venv).
 	fi
 
 init: clean venv check ## Clean, install dependencies, and run checks.
-
 
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)

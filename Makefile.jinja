@@ -19,10 +19,9 @@ help: ## Show available commands.
 check: $(VENV_DIR){% if project_slug == "project_template" %}/bin/{{ pre_commit_tool }}{% endif %} ## Run code quality checks.
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} run --all-files
 
-venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
-{% if project_slug == "project_template" %}
-$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv
-{% endif %}
+venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.{% if project_slug == "project_template" %}
+
+$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv{% endif %}
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
@@ -46,8 +45,7 @@ clean: ## Remove untracked files (keeps the venv).
 		fi \
 	fi
 
-init: clean venv check ## Clean, install dependencies, and run checks.
-{% if project_slug == "project_template" %}
+init: clean venv check ## Clean, install dependencies, and run checks.{% if project_slug == "project_template" %}
 
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)
