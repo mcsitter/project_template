@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+MAKEFLAGS += --no-print-directory
 
 VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
@@ -21,7 +22,8 @@ check: $(VENV_DIR)/bin/prek ## Run code quality checks.
 
 venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
 
-$(VENV_DIR)/bin/prek: venv
+$(VENV_DIR)/bin/prek: $(VENV_DIR)
+	@test -f $@ || (rm -rf $(VENV_DIR) && $(MAKE) $(VENV_DIR))
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
