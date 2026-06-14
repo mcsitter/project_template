@@ -16,12 +16,12 @@ help: ## Show available commands.
 		awk 'BEGIN {FS=":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 	@echo ""
 
-check: $(VENV_DIR){% if project_slug == "project_template" %}/bin/{{ pre_commit_tool }}{% endif %} ## Run code quality checks.
+check: $(VENV_DIR)/bin/{{ pre_commit_tool }} ## Run code quality checks.
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} run --all-files
 
-venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.{% if project_slug == "project_template" %}
+venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
 
-$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv{% endif %}
+$(VENV_DIR)/bin/{{ pre_commit_tool }}: venv
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
