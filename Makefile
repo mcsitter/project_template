@@ -4,17 +4,25 @@ VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
-.PHONY: help init venv check clean  test-template
+.PHONY: help init venv check clean test-template
 
-help:  ## Show this help message.
-	grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
-	awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
+help: ## Show available commands.
+	@echo ""
+	@echo "Usage: make <target>"
+	@echo ""
+	@echo "Available targets:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		sort | \
+		awk 'BEGIN {FS=":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
+	@echo ""
 
-check: $(VENV_DIR)/bin/prek  ## Run prek checks.
+check: $(VENV_DIR)/bin/prek ## Run code quality checks.
 	$(VENV_PYTHON) -m prek run --all-files
 
-venv: $(VENV_DIR)  # Create virtual environment and install dependencies.
+venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
+
 $(VENV_DIR)/bin/prek: venv
+
 
 $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
@@ -24,8 +32,7 @@ $(VENV_DIR): pyproject.toml
 	$(VENV_PYTHON) -m prek install
 	$(VENV_PYTHON) -m prek autoupdate
 
-
-clean:  ## Clean untracked files (except virtual environment and Python files).
+clean: ## Remove untracked files (keeps the venv).
 	@FILES="$$(git clean -xdn -e $(VENV_DIR)/ -e '*.py')"; \
 	if [ -z "$$FILES" ]; then \
 		echo "Nothing to clean."; \
@@ -37,7 +44,8 @@ clean:  ## Clean untracked files (except virtual environment and Python files).
 		fi \
 	fi
 
-init: clean venv check ## Clean untracked files (except virtual environment and Python files).
+init: clean venv check ## Clean, install dependencies, and run checks.
+
 
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)
@@ -45,5 +53,5 @@ $(VENV_DIR)/bin/copier:
 	$(VENV_PIP) install --upgrade pip setuptools wheel
 	$(VENV_PIP) install copier
 
-test-template: $(VENV_DIR)/bin/copier  ## Test the copier template by applying it to itself
+test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite . .
