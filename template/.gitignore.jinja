@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/data,git,python,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=data,git,python,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/data,git,jupyternotebooks,python,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=data,git,jupyternotebooks,python,visualstudiocode
 
 ### Data ###
 *.csv
@@ -29,6 +29,20 @@
 *_BASE_*.txt
 *_LOCAL_*.txt
 *_REMOTE_*.txt
+
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -107,13 +121,6 @@ docs/_build/
 # PyBuilder
 .pybuilder/
 target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -221,7 +228,7 @@ pyrightconfig.json
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/data,git,python,visualstudiocode{% if project_slug == "project_template" %}
-requirements.txt
+# End of https://www.toptal.com/developers/gitignore/api/data,git,jupyternotebooks,python,visualstudiocode
+{% if project_slug == "project_template" %}requirements.txt
 .copier-answers.yml
 src{% endif %}
