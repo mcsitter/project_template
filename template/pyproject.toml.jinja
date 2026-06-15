@@ -3,6 +3,7 @@ name = "{{ project_name_kebab_case }}"
 version = "0.1.0"
 description = "{{ project_description }}"{% if project_type == "package" %}
 requires-python = ">={{ python_version }}"{% endif %}
+dependencies = []
 
 [project.optional-dependencies]
 dev = [
