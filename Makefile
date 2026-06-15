@@ -54,4 +54,4 @@ $(VENV_DIR)/bin/copier:
 	$(VENV_PIP) install copier
 
 test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
-	$(VENV_PYTHON) -m copier copy --defaults --overwrite . .
+	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
