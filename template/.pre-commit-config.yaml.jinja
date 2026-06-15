@@ -18,7 +18,7 @@ repos:
     hooks:
       - id: ruff-check
         args: [--fix]
-      - id: ruff-format{% if mypy %}
+      - id: ruff-format{% if typing %}
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.11.0
     hooks:

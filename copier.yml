@@ -3,21 +3,35 @@ _subdirectory: template
 
 project_name:
   type: str
+  help: What is your {{ project_type }}'s name?
   default: project_template
-  help: Name of the generated project
+  placeholder: "{% if project_type == 'app' %}My App{% else %}My Package{% endif %}"
+  validator: >-
+    {% if not project_name.strip() %}
+    Invalid project name
+    {% endif %}
 
-project_slug:
+project_type:
   type: str
-  default: "{{ project_name | lower | replace('-', '_') | replace(' ', '_') }}"
-  when: false
-
-package_or_app:
-  type: str
-  default: package
+  help: Is this project a package or an app?
   choices:
-    - package
     - app
-  help: Generate a Python package or an application (packages use src/ layout)
+    - package
+  default: package
+
+project_description:
+  type: str
+  help: What does your {{ project_type }} do in one sentence?
+  default: A Python {{ project_type }} that does things.
+  validator: >-
+    {% if not project_description.strip() %}
+    Invalid project description
+    {% endif %}
+
+python_version:
+  type: str
+  help: "{% if project_type == 'app' %}Which Python version should your app use?{% else %}What is the minimum Python version your package should support?{% endif %}"
+  default: "{% if project_type == 'app' %}3.14{% else %}3.12{% endif %}"
 
 pre_commit_tool:
   type: str
@@ -25,12 +39,25 @@ pre_commit_tool:
   choices:
     - prek
     - pre_commit
-  help: Pre-commit tool module name
+  help: Which pre-commit tool do you want to use? (Use prek if you don't know the difference)
 
-mypy:
+with_conventional_commits:
+  type: bool
+  help: Do you want to follow the Conventional Commits standard (https://www.conventionalcommits.org) for your commit messages?
+  default: true
+
+typing:
   type: bool
   default: false
   help: Add `mypy` dev dependency and pre-commit hook
+
+project_name_kebab_case:
+  when: false
+  default: "{{ project_name | lower | replace(' ', '-') }}"
+
+project_name_snake_case:
+  when: false
+  default: "{{ project_name | lower | replace(' ', '_') }}"
 
 _exclude:
   - .git
