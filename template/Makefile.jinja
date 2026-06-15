@@ -5,7 +5,7 @@ VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
-.PHONY: help init venv check clean {% if project_name_snake_case == "project_template" %}test-template{% endif %}
+.PHONY: check clean git help init {% if project_name_snake_case == "project_template" %}test-template {% endif %}venv
 
 help: ## Show available commands.
 	@echo ""
@@ -47,7 +47,15 @@ clean: ## Remove untracked files (keeps the venv).
 		fi \
 	fi
 
-init: clean venv check ## Clean, install dependencies, and run checks.{% if project_name_snake_case == "project_template" %}
+git:
+	@if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then \
+		echo "Git repository already exists."; \
+	else \
+		echo "Initializing git repository (master branch)..."; \
+		git init -b master; \
+	fi
+
+init: git clean venv check ## Clean, install dependencies, and run checks.{% if project_name_snake_case == "project_template" %}
 
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)
