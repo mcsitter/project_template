@@ -55,3 +55,4 @@ $(VENV_DIR)/bin/copier:
 
 test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
+	$(VENV_PYTHON) scripts/update_precommit_template.py
