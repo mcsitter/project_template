@@ -1,5 +1,19 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,git
+# Created by https://www.toptal.com/developers/gitignore/api/data,git,python,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=data,git,python,visualstudiocode
+
+### Data ###
+*.csv
+*.dat
+*.efx
+*.gbr
+*.key
+*.pps
+*.ppt
+*.pptx
+*.sdf
+*.tax2010
+*.vcf
+*.xml
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -207,6 +221,6 @@ pyrightconfig.json
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,git
+# End of https://www.toptal.com/developers/gitignore/api/data,git,python,visualstudiocode
 requirements.txt
 src
