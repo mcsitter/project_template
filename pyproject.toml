@@ -5,8 +5,8 @@ description = "A Python package that does things."
 
 [project.optional-dependencies]
 dev = [
-    "prek",
     "copier",
+    "prek",
 ]
 
 [tool.setuptools]

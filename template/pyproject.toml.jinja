@@ -5,9 +5,9 @@ description = "{{ project_description }}"
 
 [project.optional-dependencies]
 dev = [
-    "{{ pre_commit_tool }}",{% if project_name_snake_case == "project_template" %}
-    "copier",{% endif %}{% if typing %}
+    "copier",{% if typing %}
     "mypy",{% endif %}
+    "{{ pre_commit_tool }}",
 ]
 
 [tool.setuptools]{% if project_type == 'package' %}
