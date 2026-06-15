@@ -68,3 +68,5 @@ _exclude:
   - ^Makefile$
   - ^pyproject.toml$
   - requirements.txt
+  - "{% if project_type == 'package' %}main.py{% endif %}"
+  - "{% if project_type == 'package' %}.python-version{% endif %}"
