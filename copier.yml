@@ -1,4 +1,5 @@
 _schema: 1
+_subdirectory: template
 
 project_name:
   type: str
