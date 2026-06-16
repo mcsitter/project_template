@@ -18,14 +18,20 @@ repos:
     hooks:
       - id: ruff-check
         args: [--fix]
-      - id: ruff-format{% if typing %}
+      - id: ruff-format
+
+{%- if typing %}
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v2.1.0
     hooks:
       - id: mypy
-        args: [--ignore-missing-imports]{% endif %}{%- if with_conventional_commits %}
+        args: [--ignore-missing-imports]
+{%- endif %}
+
+{%- if with_conventional_commits %}
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v4.16.3
     hooks:
       - id: commitizen
-        stages: [commit-msg]{% endif %}
+        stages: [commit-msg]
+{%- endif %}

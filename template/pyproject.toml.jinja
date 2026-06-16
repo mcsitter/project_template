@@ -1,33 +1,43 @@
 [project]
 name = "{{ project_name_kebab_case }}"
 version = "0.1.0"
-description = "{{ project_description }}"{% if project_type == "package" %}
-requires-python = ">={{ python_version }}"{% endif %}
+description = "{{ project_description }}"
+{%- if project_type == "package" %}
+requires-python = ">={{ python_version }}"
+{%- endif %}
 dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "copier",{% if typing %}
-    "mypy",{% endif %}
-    "{{ pre_commit_tool }}",{% if project_type == "app" %}
-    "python-dotenv",{% endif %}
+    "copier",
+{%- if typing %}
+    "mypy",
+{%- endif %}
+    "{{ pre_commit_tool }}",
+{%- if project_type == "app" %}
+    "python-dotenv",
+{%- endif %}
 ]
 
-[tool.setuptools]{% if project_type == 'package' %}
+[tool.setuptools]
+{%- if project_type == 'package' %}
 package-dir = { "" = "src" }
-{% else %}
+{%- else %}
 package-dir = { "" = "." }
-{% endif %}
+{%- endif %}
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.ruff]
-line-length = 88{% if project_name_snake_case == "project_template" %}
+line-length = 88
+{%- if project_name_snake_case == "project_template" %}
 extend-exclude = [
     "*{{ '{{' }}*{{ '}}' }}*",
     "*{{ '{%' }}*{{ '%}' }}*",
-]{% endif %}
+]
+{%- endif %}
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -36,7 +46,10 @@ ignore = [
     "D203",
     "D212",
     "S311",
-]{% if typing %}
+]
+
+{%- if typing %}
 
 [tool.mypy]
-ignore_missing_imports = true{% endif %}
+ignore_missing_imports = true
+{%- endif %}

@@ -5,7 +5,11 @@ VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
-.PHONY: check clean git help init {% if project_name_snake_case == "project_template" %}test-template {% endif %}venv
+{%- set phony_targets = ['check', 'clean', 'git', 'help', 'init', 'venv'] %}
+{%- if project_name_snake_case == "project_template" %}
+{%- set phony_targets = phony_targets + ['test-template'] %}
+{%- endif %}
+.PHONY: {{ phony_targets | join(' ') }}
 
 help: ## Show available commands.
 	@echo ""
@@ -29,9 +33,13 @@ $(VENV_DIR): pyproject.toml
 	rm -rf $(VENV_DIR)
 	python -m venv $(VENV_DIR)
 	$(VENV_PIP) install --upgrade pip setuptools wheel
-	{% if project_type == "app" %}$(VENV_PIP) install .
+{%- if project_type == "app" %}
+	$(VENV_PIP) install .
 	$(VENV_PIP) freeze --exclude {{ project_name_snake_case }} > requirements.txt
-	$(VENV_PIP) install .[dev]{% else %}$(VENV_PIP) install -e .[dev]{% endif %}
+	$(VENV_PIP) install .[dev]
+{%- else %}
+	$(VENV_PIP) install -e .[dev]
+{%- endif %}
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} install
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} autoupdate
 
@@ -55,7 +63,9 @@ git:
 		git init -b master; \
 	fi
 
-init: git clean venv check ## Clean, install dependencies, and run checks.{% if project_name_snake_case == "project_template" %}
+init: git clean venv check ## Clean, install dependencies, and run checks.
+
+{%- if project_name_snake_case == "project_template" %}
 
 $(VENV_DIR)/bin/copier:
 	rm -rf $(VENV_DIR)
@@ -65,4 +75,5 @@ $(VENV_DIR)/bin/copier:
 
 test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
-	$(VENV_PYTHON) scripts/update_precommit_template.py{% endif %}
+	$(VENV_PYTHON) scripts/update_precommit_template.py
+{%- endif %}

@@ -4,8 +4,7 @@ MAKEFLAGS += --no-print-directory
 VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
-
-.PHONY: check clean git help init test-template venv
+.PHONY: check clean git help init venv test-template
 
 help: ## Show available commands.
 	@echo ""
