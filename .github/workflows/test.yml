@@ -1,0 +1,55 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        project-type: [app, package]
+        pre-commit-tool: [prek, pre_commit]
+        with-conventional-commits: [true, false]
+        typing: [true, false]
+
+    name: "Test ${{ matrix.project-type }} (${{ matrix.pre-commit-tool }}, conventional=${{ matrix.with-conventional-commits }}, typing=${{ matrix.typing }})"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          path: substrate
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+
+      - name: Scaffold Python project
+        run: |
+          uvx copier copy --vcs-ref=HEAD substrate my-project \
+            --defaults \
+            --data project_type="${{ matrix.project-type }}" \
+            --data project_name="My Project" \
+            --data project_description="A Python ${{ matrix.project-type }} that does things." \
+            --data pre_commit_tool="${{ matrix.pre-commit-tool }}" \
+            --data with_conventional_commits="${{ matrix.with-conventional-commits }}" \
+            --data typing="${{ matrix.typing }}"
+          cd my-project
+          git config --global user.email "test@example.com"
+          git config --global user.name "Test User"
+          git config --global init.defaultBranch main
+          git init
+          git add .
+          git commit -m "Initial commit"
+
+      - name: Run pre-commit hooks
+        uses: j178/prek-action@v2
+        with:
+          working-directory: ./my-project
