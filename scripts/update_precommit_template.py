@@ -1,6 +1,7 @@
 import subprocess
 import yaml
 import re
+import sys
 from pathlib import Path
 
 
@@ -19,7 +20,7 @@ def extract_revs(cfg: dict) -> dict[str, str]:
 
 
 def run_autoupdate() -> None:
-    subprocess.run(["prek", "autoupdate"], check=True)
+    subprocess.run([sys.executable, "-m", "prek", "autoupdate"], check=True)
 
 
 def strip_jinja(template_text: str) -> str:
