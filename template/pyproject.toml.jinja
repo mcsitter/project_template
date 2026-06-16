@@ -9,7 +9,8 @@ dependencies = []
 dev = [
     "copier",{% if typing %}
     "mypy",{% endif %}
-    "{{ pre_commit_tool }}",
+    "{{ pre_commit_tool }}",{% if project_type == "app" %}
+    "python-dotenv",{% endif %}
 ]
 
 [tool.setuptools]{% if project_type == 'package' %}
