@@ -5,11 +5,14 @@ VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
-{%- set phony_targets = ['check', 'clean', 'git', 'help', 'init', 'venv'] %}
+{%- set phony_targets = ["check", "clean", "git", "help", "init", "venv"] %}
 {%- if project_name_snake_case == "project_template" %}
-{%- set phony_targets = phony_targets + ['test-template'] %}
+{%- set phony_targets = phony_targets + ["test-template"] %}
 {%- endif %}
-.PHONY: {{ phony_targets | join(' ') }}
+{%- if project_type == "app" %}
+{%- set phony_targets = phony_targets + ["run"] %}
+{%- endif %}
+.PHONY: {{ phony_targets | sort | join(" ") }}
 
 help: ## Show available commands.
 	@echo ""
@@ -76,4 +79,9 @@ $(VENV_DIR)/bin/copier:
 test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
 	$(VENV_PYTHON) scripts/update_precommit_template.py
+{%- endif %}
+{%- if project_type == "app" %}
+
+run: ## Run the {{ project_name }} app
+	$(VENV_PYTHON) main.py
 {%- endif %}
