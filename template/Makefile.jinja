@@ -45,6 +45,9 @@ $(VENV_DIR): pyproject.toml
 {%- endif %}
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} install
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} autoupdate
+{%- if typing %}
+	$(VENV_PYTHON) -m mypy --install-types --non-interactive
+{%- endif %}
 
 clean: ## Remove untracked files (keeps the venv).
 	@FILES="$$(git clean -xdn -e $(VENV_DIR)/ -e '*.py')"; \
