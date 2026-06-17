@@ -1,10 +1,9 @@
 .DEFAULT_GOAL := help
 MAKEFLAGS += --no-print-directory
-
+.PHONY: check clean git help init test-template venv
 VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python
 VENV_PIP := $(VENV_DIR)/bin/python -m pip
-.PHONY: check clean git help init test-template venv
 
 help: ## Show available commands.
 	@echo ""

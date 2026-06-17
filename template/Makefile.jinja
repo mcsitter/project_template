@@ -1,10 +1,5 @@
 .DEFAULT_GOAL := help
 MAKEFLAGS += --no-print-directory
-
-VENV_DIR := .venv
-VENV_PYTHON := $(VENV_DIR)/bin/python
-VENV_PIP := $(VENV_DIR)/bin/python -m pip
-
 {%- set phony_targets = ["check", "clean", "git", "help", "init", "venv"] %}
 {%- if project_name_snake_case == "project_template" %}
 {%- set phony_targets = phony_targets + ["test-template"] %}
@@ -13,6 +8,9 @@ VENV_PIP := $(VENV_DIR)/bin/python -m pip
 {%- set phony_targets = phony_targets + ["run"] %}
 {%- endif %}
 .PHONY: {{ phony_targets | sort | join(" ") }}
+VENV_DIR := .venv
+VENV_PYTHON := $(VENV_DIR)/bin/python
+VENV_PIP := $(VENV_DIR)/bin/python -m pip
 
 help: ## Show available commands.
 	@echo ""
