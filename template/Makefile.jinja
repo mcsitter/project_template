@@ -82,6 +82,6 @@ test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it
 {%- endif %}
 {%- if project_type == "app" %}
 
-run: ## Run the {{ project_name }} app
+run: $(VENV_DIR) ## Run the {{ project_name }} app
 	$(VENV_PYTHON) main.py
 {%- endif %}
