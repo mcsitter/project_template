@@ -31,15 +31,21 @@ $(VENV_DIR): pyproject.toml
 	$(VENV_PYTHON) -m prek install
 	$(VENV_PYTHON) -m prek autoupdate
 
-clean: ## Remove untracked files (keeps the venv).
-	@FILES="$$(git clean -xdn -e $(VENV_DIR)/ -e '*.py')"; \
+clean: ## Remove untracked files (keeps the .venv folder and .env files).
+	@FILES="$$(git clean -xdn \
+		-e $(VENV_DIR)/ \
+		-e '*.py' \
+		-e .env )"; \
 	if [ -z "$$FILES" ]; then \
 		echo "Nothing to clean."; \
 	else \
 		printf "%s\n" "$$FILES"; \
 		read -p "Delete these files? [y/N] " ANSWER; \
 		if [ "$$ANSWER" = "y" ] || [ "$$ANSWER" = "Y" ]; then \
-			git clean -xd -f -e $(VENV_DIR)/ -e '*.py'; \
+			git clean -xd -f \
+				-e $(VENV_DIR)/ \
+				-e '*.py' \
+				-e .env ; \
 		fi \
 	fi
 
@@ -53,12 +59,6 @@ git:
 
 init: git clean venv check ## Clean, install dependencies, and run checks.
 
-$(VENV_DIR)/bin/copier:
-	rm -rf $(VENV_DIR)
-	python -m venv $(VENV_DIR)
-	$(VENV_PIP) install --upgrade pip setuptools wheel
-	$(VENV_PIP) install copier
-
-test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
+test-template: $(VENV_DIR) ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
 	$(VENV_PYTHON) scripts/update_precommit_template.py
