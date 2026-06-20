@@ -1,0 +1,27 @@
+{
+  "name":"project_template",
+  "image": "mcr.microsoft.com/devcontainers/python:3-3.12",
+  "postStartCommand":"rm -rf .venv && make git venv check",
+  "customizations":{
+    "vscode":{
+      "extensions":[
+        "GitHub.copilot-chat",
+        "charliermarsh.ruff",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python"
+      ],
+      "settings":{
+        "editor.bracketPairColorization.enabled":true,
+        "editor.codeActionsOnSave":{
+          "source.fixAll":"explicit",
+          "source.organizeImports":"explicit"
+        },
+        "editor.formatOnSave":true,
+        "[python]":{
+          "editor.defaultFormatter":"charliermarsh.ruff"
+        },
+        "python.terminal.activateEnvironment":true
+      }
+    }
+  }
+}
