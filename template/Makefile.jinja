@@ -42,6 +42,9 @@ $(VENV_DIR): pyproject.toml
 	$(VENV_PIP) install -e .[dev]
 {%- endif %}
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} install
+{%- if with_conventional_commits %}
+	$(VENV_PYTHON) -m {{ pre_commit_tool }} install --hook-type commit-msg commitizen
+{%- endif %}
 	$(VENV_PYTHON) -m {{ pre_commit_tool }} autoupdate
 {%- if typing %}
 	$(VENV_PYTHON) -m mypy --install-types --non-interactive

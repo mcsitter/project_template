@@ -29,6 +29,7 @@ $(VENV_DIR): pyproject.toml
 	$(VENV_PIP) install --upgrade pip setuptools wheel
 	$(VENV_PIP) install -e .[dev]
 	$(VENV_PYTHON) -m prek install
+	$(VENV_PYTHON) -m prek install --hook-type commit-msg commitizen
 	$(VENV_PYTHON) -m prek autoupdate
 
 clean: ## Remove untracked files (keeps the .venv folder and .env files).
