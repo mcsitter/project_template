@@ -16,7 +16,7 @@ def load_yaml(path: Path) -> dict:
 
 
 def extract_revs(cfg: dict) -> dict[str, str]:
-    return {r["repo"]: r["rev"] for r in cfg.get("repos", [])}
+    return {r["repo"]: r["rev"] for r in cfg.get("repos", []) if "rev" in r}
 
 
 def run_autoupdate() -> None:
