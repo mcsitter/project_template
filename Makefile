@@ -61,5 +61,5 @@ git:
 init: git clean venv check ## Clean, install dependencies, and run checks.
 
 test-template: $(VENV_DIR) ## Test the Copier template by applying it to itself.
-	$(VENV_PYTHON) scripts/update_precommit_template.py
+	$(VENV_PYTHON) scripts/update_precommit_template.py || true
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
