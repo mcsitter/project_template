@@ -7,8 +7,8 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "copier",
-    "prek",
+  "copier",
+  "prek",
 ]
 
 [tool.setuptools]
@@ -21,17 +21,17 @@ build-backend = "setuptools.build_meta"
 [tool.ruff]
 line-length = 88
 extend-exclude = [
-    "*{{*}}*",
-    "*{%*%}*",
+  "*{{*}}*",
+  "*{%*%}*",
 ]
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "COM812",
-    "D203",
-    "D213",
-    "S311",
+  "COM812",
+  "D203",
+  "D213",
+  "S311",
 ]
 
 [tool.commitizen]

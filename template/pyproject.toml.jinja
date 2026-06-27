@@ -9,13 +9,13 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "copier",
+  "copier",
 {%- if typing %}
-    "mypy",
+  "mypy",
 {%- endif %}
-    "{{ pre_commit_tool }}",
+  "{{ pre_commit_tool }}",
 {%- if project_type == "app" %}
-    "python-dotenv",
+  "python-dotenv",
 {%- endif %}
 ]
 
@@ -34,18 +34,18 @@ build-backend = "setuptools.build_meta"
 line-length = 88
 {%- if project_name_snake_case == "project_template" %}
 extend-exclude = [
-    "*{{ '{{' }}*{{ '}}' }}*",
-    "*{{ '{%' }}*{{ '%}' }}*",
+  "*{{ '{{' }}*{{ '}}' }}*",
+  "*{{ '{%' }}*{{ '%}' }}*",
 ]
 {%- endif %}
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "COM812",
-    "D203",
-    "D213",
-    "S311",
+  "COM812",
+  "D203",
+  "D213",
+  "S311",
 ]
 
 {%- if typing %}
