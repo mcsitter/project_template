@@ -20,7 +20,7 @@ check: $(VENV_DIR)/bin/prek ## Run code quality checks.
 
 venv: $(VENV_DIR) ## Create the virtual environment and install dependencies.
 
-$(VENV_DIR)/bin/prek: $(VENV_DIR)
+$(VENV_DIR)/bin/%: $(VENV_DIR)
 	@test -f $@ || (rm -rf $(VENV_DIR) && $(MAKE) $(VENV_DIR))
 
 $(VENV_DIR): pyproject.toml
@@ -60,6 +60,6 @@ git:
 
 init: git clean venv check ## Clean, install dependencies, and run checks.
 
-test-template: $(VENV_DIR) ## Test the Copier template by applying it to itself.
+test-template: $(VENV_DIR)/bin/copier ## Test the Copier template by applying it to itself.
 	$(VENV_PYTHON) scripts/update_precommit_template.py || true
 	$(VENV_PYTHON) -m copier copy --defaults --overwrite --vcs-ref=HEAD . .
