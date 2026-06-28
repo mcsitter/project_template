@@ -1,6 +1,10 @@
 {
   "name":"project_template",
   "image": "mcr.microsoft.com/devcontainers/python:3-3.12",
+  "mounts": [
+    "source=${localEnv:HOME}/.cache/pip,target=/home/vscode/.cache/pip,type=bind",
+    "source=${localEnv:HOME}/.cache/prek,target=/home/vscode/.cache/prek,type=bind"
+  ],
   "postStartCommand":"rm -rf .venv && make git venv check",
   "customizations":{
     "vscode":{

@@ -1,6 +1,10 @@
 {
   "name":"{{ project_name_kebab_case }}",
   "image": "mcr.microsoft.com/devcontainers/python:3-{{ python_version }}",
+  "mounts": [
+    "source=${localEnv:HOME}/.cache/pip,target=/home/vscode/.cache/pip,type=bind",
+    "source=${localEnv:HOME}/.cache/{{ pre_commit_tool }},target=/home/vscode/.cache/{{ pre_commit_tool }},type=bind"
+  ],
   "postStartCommand":"rm -rf .venv && make git venv check",
   "customizations":{
     "vscode":{
